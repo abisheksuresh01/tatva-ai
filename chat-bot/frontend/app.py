@@ -42,7 +42,7 @@ def fetch_conversations(user_id, token):
     res = requests.get(f"{BACKEND_URL}/conversations", params={"user_id": user_id, "fields": "title"}, headers={"Authorization": f"Bearer {token}"})
     return res.json() if res.ok else []
 
-@st.cache_data(ttl=60)
+#@st.cache_data(ttl=60)
 def fetch_conversation_details(conversation_id, token):
     res = requests.get(f"{BACKEND_URL}/conversations/{conversation_id}", headers={"Authorization": f"Bearer {token}"})
     return res.json() if res.ok else {}
@@ -123,5 +123,18 @@ if "conversation_id" in st.session_state:
 # Chat input and sending
 prompt = st.chat_input("Type your message here...")
 if prompt:
-    requests.post(f"{BACKEND_URL}/messages", json={"conversation_id": st.session_state.conversation_id, "sender": "user", "message_text": prompt}, headers=headers)
-    st.experimental_rerun()
+    with st.chat_message("user"):
+        st.write(prompt)
+    response = requests.post(f"{BACKEND_URL}/messages", json={"conversation_id": st.session_state.conversation_id, "sender": "user", "message_text": prompt}, headers=headers)
+    #st.experimental_rerun()
+
+    with st.chat_message("bot"):
+        message_placeholder = st.empty()
+        full_response = ""
+        for chunk in response.iter_content(chunk_size=None, decode_unicode=True):
+            if chunk:
+                full_response += chunk
+                message_placeholder.markdown(full_response + "▌")
+        message_placeholder.markdown(full_response)
+
+    
