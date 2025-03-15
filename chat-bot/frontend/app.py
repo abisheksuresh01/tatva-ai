@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 BACKEND_URL = "http://localhost:8000"
 
+
 # Set page configuration once at the very top
 st.set_page_config(page_title="Tatva AI Chat App", layout="wide", initial_sidebar_state="expanded")
 
@@ -104,7 +105,6 @@ if st.sidebar.button("➕ New Conversation"):
 
 # Sidebar conversation list
 conversations = fetch_conversations(user_id, st.session_state.token)
-st.sidebar.subheader("📃 Your Conversations")
 for conv in conversations:
     title = conv["title"] or "Untitled"
     if st.sidebar.button(title, key=conv["conversation_id"]):
