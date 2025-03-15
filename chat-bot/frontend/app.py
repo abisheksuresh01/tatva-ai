@@ -9,7 +9,9 @@ BACKEND_URL = "http://localhost:8000"
 
 
 # Set page configuration once at the very top
-st.set_page_config(page_title="Tatva AI Chat App", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Tatva", layout="wide", initial_sidebar_state="expanded")
+
+
 
 # Hide default multipage navigation and sidebar initially
 if "token" not in st.session_state:
@@ -49,7 +51,7 @@ def fetch_conversation_details(conversation_id, token):
 
 # Authentication Check
 if "token" not in st.session_state:
-    st.title("Welcome to Tatva AI")
+    st.title("Chat with Tatva")
     auth_mode = st.radio("Select Action", ["Login", "Signup"], index=0)
 
     if auth_mode == "Login":
@@ -88,7 +90,7 @@ def logout():
     st.experimental_rerun()
 
 # Sidebar menu
-st.sidebar.header("Menu")
+#st.sidebar.header("Menu")
 st.sidebar.button("Logout", on_click=logout)
 
 user = fetch_user(user_id, st.session_state.token)
@@ -115,7 +117,7 @@ for conv in conversations:
 if "conversation_id" in st.session_state:
     conv_id = st.session_state.conversation_id
     conversation_data = fetch_conversation_details(conv_id, st.session_state.token)
-    st.header(f"Chat: {conversation_data.get('title', 'Untitled')}")
+    st.header(f"{conversation_data.get('title', 'Untitled')}")
     for msg in conversation_data.get("messages", []):
         with st.chat_message(msg["sender"]):
             st.write(msg["text"])

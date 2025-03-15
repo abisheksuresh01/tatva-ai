@@ -182,7 +182,7 @@ def get_user(user_id: int, current_user_id: int = Depends(get_current_user), db:
 @app.post("/conversations/create")
 def create_conversation(db: Session = Depends(get_db), current_user_id: int = Depends(get_current_user)):
     print(datetime.now())
-    new_conv = Conversation(user_id=current_user_id, title="New Conversation")
+    new_conv = Conversation(user_id=current_user_id, title="Untitled")
     db.add(new_conv)
     db.commit()
     db.refresh(new_conv)
