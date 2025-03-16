@@ -6,13 +6,12 @@ The Tatva AI Chat App is a web-based chat to talk with AI (using Gemini). It use
 ## Prerequisites
 - Python 3.8 or higher
 - PostgreSQL
-- MongoDB
 
 ## Setup Instructions
 
 ### 1. Clone Repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/abisheksuresh01/tatva-ai.git
 cd <project-directory>
 ```
 
